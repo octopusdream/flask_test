@@ -13,7 +13,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 //sh 'docker build -t yusine51/jenkinstest ./pushdockerimage/' (this will use the tag latest)
-	            sh 'docker build -t 13.209.15.249:5001/flask_test:$BUILD_NUMBER ./'
+	            sh 'docker build -t 13.209.15.249:5001/flask_test:$BUILD_NUMBER ./docker-Image-repo'
             }
         }
         stage('Docker Login') {
