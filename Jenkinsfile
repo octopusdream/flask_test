@@ -31,7 +31,7 @@ pipeline {
     }
     post {
         always {
-            sh 'docker logout'
+            sh 'docker logout 13.209.15.249:5001'
         }
     }
 }
