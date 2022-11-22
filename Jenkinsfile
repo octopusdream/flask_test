@@ -12,6 +12,7 @@ pipeline {
         }
         stage('Build Image') {
             steps {
+		sh '/etc/init.d/docker start'
                 //sh 'docker build -t yusine51/jenkinstest ./pushdockerimage/' (this will use the tag latest)
 	        sh 'docker build -t 3.37.129.51:5001/flask_test:$BUILD_NUMBER .'
             }
