@@ -1,7 +1,8 @@
 pipeline {
     agent any
     environment{
-        NEXUS_CREDS = credentials('nexus')   
+        NEXUS_CREDS = credentials('nexus')
+    }
     stages {
         stage('Clone Repo') {
             steps {
