@@ -33,6 +33,9 @@ pipeline {
                 sh 'docker push ${JENKINS_IP}:5001/flask_test:$BUILD_NUMBER'
             }
         }
+	stage('Trigger ManifestUpdate') {
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+        }
     }
     post {
         always {
