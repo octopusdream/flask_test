@@ -3,8 +3,14 @@ pipeline {
     environment{
         NEXUS_CREDS = credentials('nexus')
 	JENKINS_IP = '3.37.129.159'
+	SLACK_CHANNEL = '#jenkins'
     }
     stages {
+	stage('Start') {
+                steps {
+                    slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+        }
         stage('Clone Repo') {
             steps {
                 checkout scm
@@ -32,6 +38,12 @@ pipeline {
     post {
         always {
             sh 'docker logout ${Jenkins_IP}:5001'
+        }
+	success {
+            slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        failure {
+            slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
     }
 }
