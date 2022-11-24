@@ -30,7 +30,6 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                //sh 'docker push raj80dockerid/jenkinstest' (this will use the tag latest)    
                 sh 'docker push ${JENKINS_IP}:5001/flask_test:$BUILD_NUMBER'
             }
         }
