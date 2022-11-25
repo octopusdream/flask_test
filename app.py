@@ -7,7 +7,7 @@ app = Flask(__name__)
 def hello():
     ip = socket.gethostbyname(socket.gethostname())
     zone = os.environ.get('ZONE', '')
-    return f'[{zone}] hello! {ip}'
+    return f'[{zone}] "hello!" from {ip}'
 
 if __name__ == '__main__':
     app.run()
