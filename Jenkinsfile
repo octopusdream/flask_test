@@ -19,7 +19,6 @@ pipeline {
         }
         stage('Build Image') {
             steps {
-		sh '/etc/init.d/docker start'
 		sh 'docker build -t ${JENKINS_IP}:5001/flask_test:$BUILD_NUMBER .'
             }
         }
