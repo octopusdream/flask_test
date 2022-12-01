@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment{
         NEXUS_CREDS = credentials('nexus')
-	JENKINS_IP = '3.39.22.98'
+	JENKINS_IP = 'jenkins-1d89f623e089d4f6.elb.ap-northeast-3.amazonaws.com'
 	SLACK_CHANNEL = '#jenkins'
     }
     stages {
