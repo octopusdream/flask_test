@@ -13,7 +13,7 @@ def hello():
     ip = socket.gethostbyname(socket.gethostname())
     cmd = "curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone"
     zone = subprocess.check_output(cmd, shell=True)
-    return f'[{zone}] "hello!" from {ip}'
+    return f'[{zone}] "hello!-hoon" from {ip}'
 
 
 
