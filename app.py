@@ -6,7 +6,16 @@ from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
 from flask_prometheus_metrics import register_metrics
 
+CONFIG = {"version": "v0.1.2", "config": "staging"}
+MAIN = Blueprint("main", __name__)
 app = Flask(__name__)
+
+
+def register_blueprints(app):
+    """
+    Register blueprints to the app
+    """
+    app.register_blueprint(MAIN)
 
 @app.route('/')
 def hello():
@@ -15,14 +24,33 @@ def hello():
     zone = subprocess.check_output(cmd, shell=True)
     return f'[{zone}] "hello! {app}" from {ip}'
 
+def create_app(config):
+    """
+    Application factory
+    """
+    app = Flask(__name__)
+
+    register_blueprints(app)
+    register_metrics(app, app_version=config["version"], app_config=config["config"])
+    return app
 
 
-if __name__ == '__main__':
-    # provide app's version and deploy environment/config name to set a gauge metric
-    register_metrics(app, app_version="v0.1.2", app_config="staging")
+def create_dispatcher() -> DispatcherMiddleware:
+    """
+    App factory for dispatcher middleware managing multiple WSGI apps
+    """
+    main_app = create_app(config=CONFIG)
+    return DispatcherMiddleware(main_app.wsgi_app, {"/metrics": make_wsgi_app()})
 
-    # Plug metrics WSGI app to your main app with dispatcher
-    dispatcher = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
 
-    run_simple(hostname="localhost", port=5002, application=dispatcher)
+if __name__ == "__main__":
+    run_simple(
+        "localhost",
+        5000,
+        create_dispatcher(),
+        use_reloader=True,
+        use_debugger=True,
+        use_evalex=True,
+    )
     app.run()
+    
