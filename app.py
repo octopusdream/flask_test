@@ -24,5 +24,5 @@ if __name__ == '__main__':
     # Plug metrics WSGI app to your main app with dispatcher
     dispatcher = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
 
-    run_simple(hostname="localhost", port=5000, application=dispatcher)
+    run_simple(hostname="localhost", port=5001, application=dispatcher)
     app.run()
