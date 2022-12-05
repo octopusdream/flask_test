@@ -45,12 +45,12 @@ def create_dispatcher() -> DispatcherMiddleware:
 
 if __name__ == "__main__":
     run_simple(
-        "localhost",
+        "0.0.0.0",
         5000,
         create_dispatcher(),
         use_reloader=True,
         use_debugger=True,
         use_evalex=True,
     )
-    app.run()
+#     app.run()
     
