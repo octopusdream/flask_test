@@ -1,6 +1,6 @@
 import subprocess
 import socket
-from flask import Flask
+from flask import Flask, Blueprint
 from prometheus_client import make_wsgi_app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
