@@ -16,7 +16,7 @@ def hello():
     ip = socket.gethostbyname(socket.gethostname())
     cmd = "curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone"
     zone = subprocess.check_output(cmd, shell=True)
-    return f'[{zone}] "hello ! {app}" from {ip}'
+    return f'[{zone}] "hello jordy! {app}" from {ip}'
 
 
 if __name__ == "__main__":
